@@ -42,8 +42,8 @@ function buildcore() {
 	ENTS=( `grep -e "entity" "${OUTDIR}"/*.cf | cut -d' ' -f4` )
 	for ent in "${ENTS[@]}"; do
 		ghdl -m --workdir=$OUTDIR $ent
-		rm -f e~"$ent".o
-		mv $ent $BINDIR
+		[ -f e~"$ent".o ] && mv e~"$ent".o $BINDIR
+		[ -f "$ent" ] && mv $ent $BINDIR
 	done
 	
 	BUILTCORE=1
@@ -58,10 +58,12 @@ function buildtests() {
 	for ent in "${T_ENTS[@]}"; do
 		ghdl -m --workdir=$OUTDIR $ent
 		ghdl -r --workdir=$OUTDIR $ent --vcd="${SIMDIR}/${ent}.vcd"
-		rm -f e~"$ent".o
-		mv $ent $BINDIR
+		[ -f e~"$ent".o ] && mv e~"$ent".o $BINDIR
+		[ -f "$ent" ] && mv $ent $BINDIR
 	done
 }
+
+[[ "$#" -eq 0 ]] && echo "$USAGE" && exit
 
 while [[ "$#" > 0 ]]; do
 	key="$1"
@@ -77,9 +79,11 @@ while [[ "$#" > 0 ]]; do
 		exit
 		;;
 		core)
+		cleanobj
 		buildcore
 		;;
 		all)
+		cleanobj
 		buildcore
 		buildtests
 		;;
