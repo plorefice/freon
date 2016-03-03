@@ -136,6 +136,61 @@ begin
 		assert res = X"00000000" report "[SUB] Wrong result" severity failure;
 
 
+		--##############################################################
+		--                          [SLT]
+		--##############################################################
+		opsel <= "010"; ctrl <= '0';
+
+		op1 <= X"00000000"; op2 <= X"00000000"; wait for T;
+		assert res = X"00000000" report "[SLT] Wrong result" severity failure;
+
+		op1 <= X"00000001"; op2 <= X"00000001"; wait for T;
+		assert res = X"00000000" report "[SLT] Wrong result" severity failure;
+
+		op1 <= X"00000003"; op2 <= X"00000007"; wait for T;
+		assert res = X"00000001" report "[SLT] Wrong result" severity failure;
+
+		op1 <= X"00000007"; op2 <= X"00000003"; wait for T;
+		assert res = X"00000000" report "[SLT] Wrong result" severity failure;
+
+
+		op1 <= X"00000000"; op2 <= X"ffff8000"; wait for T;
+		assert res = X"00000000" report "[SLT] Wrong result" severity failure;
+
+		op1 <= X"80000000"; op2 <= X"00000000"; wait for T;
+		assert res = X"00000001" report "[SLT] Wrong result" severity failure;
+
+		op1 <= X"80000000"; op2 <= X"ffff8000"; wait for T;
+		assert res = X"00000001" report "[SLT] Wrong result" severity failure;
+
+
+		op1 <= X"00000000"; op2 <= X"00007fff"; wait for T;
+		assert res = X"00000001" report "[SLT] Wrong result" severity failure;
+
+		op1 <= X"7fffffff"; op2 <= X"00000000"; wait for T;
+		assert res = X"00000000" report "[SLT] Wrong result" severity failure;
+
+		op1 <= X"7fffffff"; op2 <= X"00007fff"; wait for T;
+		assert res = X"00000000" report "[SLT] Wrong result" severity failure;
+
+
+		op1 <= X"80000000"; op2 <= X"00007fff"; wait for T;
+		assert res = X"00000001" report "[SLT] Wrong result" severity failure;
+
+		op1 <= X"7fffffff"; op2 <= X"ffff8000"; wait for T;
+		assert res = X"00000000" report "[SLT] Wrong result" severity failure;
+
+
+		op1 <= X"00000000"; op2 <= X"ffffffff"; wait for T;
+		assert res = X"00000000" report "[SLT] Wrong result" severity failure;
+
+		op1 <= X"ffffffff"; op2 <= X"00000001"; wait for T;
+		assert res = X"00000001" report "[SLT] Wrong result" severity failure;
+
+		op1 <= X"ffffffff"; op2 <= X"ffffffff"; wait for T;
+		assert res = X"00000000" report "[SLT] Wrong result" severity failure;
+
+
 		wait; -- Terminate testbench
 	end process; -- tb_proc
 
