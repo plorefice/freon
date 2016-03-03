@@ -27,40 +27,53 @@ where
 
 
 function cleanobj() {
+	echo "Cleaning up object files.."
 	ghdl --clean --workdir=$OUTDIR
 	rm -f `find $OUTDIR -name "*.o"`
 	rm -f `find $OUTDIR -name "*.cf"`
 }
 
 function cleanvcd() {
+	echo "Cleaning up simulation data.."
 	rm -f `find $OUTDIR -name "*.vcd"`
 }
 
 function buildcore() {
+	echo "[CORE] Analyzing files.."
 	ghdl -i --workdir=$OUTDIR `find $HDLDIR -name "*.vhdl"`
 	
+	echo "[CORE] Starting build.."
 	ENTS=( `grep -e "entity" "${OUTDIR}"/*.cf | cut -d' ' -f4` )
 	for ent in "${ENTS[@]}"; do
+		echo "[CORE] Building ${ent}.."
 		ghdl -m --workdir=$OUTDIR $ent
 		[ -f e~"$ent".o ] && mv e~"$ent".o $BINDIR
 		[ -f "$ent" ] && mv $ent $BINDIR
 	done
 	
 	BUILTCORE=1
+	echo "[CORE] Build successful!"
 }
 
 function buildtests() {
 	[ x"$BUILTCORE" == x"1" ] || buildcore
+
+	echo "[TEST] Analyzing files.."
 	ghdl -i --workdir=$OUTDIR `find $TESTDIR -name "*.vhdl"`
 
+	echo "[TEST] Starting build.."
 	A_ENTS=( `grep -e "entity" "${OUTDIR}"/*.cf | cut -d' ' -f4` )
 	T_ENTS=( `echo ${ENTS[@]} ${A_ENTS[@]} | tr ' ' '\n' | sort | uniq -u` )
 	for ent in "${T_ENTS[@]}"; do
+		echo "[TEST] Building ${ent}.."
 		ghdl -m --workdir=$OUTDIR $ent
+		echo "[TEST] Running ${ent}.."
 		ghdl -r --workdir=$OUTDIR $ent --vcd="${SIMDIR}/${ent}.vcd"
 		[ -f e~"$ent".o ] && mv e~"$ent".o $BINDIR
 		[ -f "$ent" ] && mv $ent $BINDIR
 	done
+
+	echo "[TEST] Build successful!"
 }
 
 [[ "$#" -eq 0 ]] && echo "$USAGE" && exit
@@ -71,12 +84,10 @@ while [[ "$#" > 0 ]]; do
 	case $key in
 		-c|--cleanobj)
 		cleanobj
-		exit
 		;;
 		-C|--cleanall)
 		cleanobj
 		cleanvcd
-		exit
 		;;
 		core)
 		cleanobj
@@ -89,9 +100,13 @@ while [[ "$#" > 0 ]]; do
 		;;
 		*)
 		echo "$USAGE"
-		exit
+		exit 1
 		;;
 	esac
 
 	shift
 done
+
+echo "All done!"
+exit 0
+
