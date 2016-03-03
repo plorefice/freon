@@ -33,9 +33,56 @@ begin
 		--###########################
 		opsel <= "000"; ctrl <= '0';
 
-		op1 <= X"00000000"; op2 <= X"00000000";
-		wait for T;
+		op1 <= X"00000000"; op2 <= X"00000000"; wait for T;
 		assert res = X"00000000" report "Wrong result" severity failure;
+
+		op1 <= X"00000001"; op2 <= X"00000001"; wait for T;
+		assert res = X"00000002" report "Wrong result" severity failure;
+
+		op1 <= X"00000003"; op2 <= X"00000007"; wait for T;
+		assert res = X"0000000A" report "Wrong result" severity failure;
+
+
+		op1 <= X"00000000"; op2 <= X"ffff8000"; wait for T;
+		assert res = X"ffff8000" report "Wrong result" severity failure;
+
+		op1 <= X"80000000"; op2 <= X"00000000"; wait for T;
+		assert res = X"80000000" report "Wrong result" severity failure;
+
+		op1 <= X"80000000"; op2 <= X"ffff8000"; wait for T;
+		assert res = X"7fff8000" report "Wrong result" severity failure;
+
+
+		op1 <= X"00000000"; op2 <= X"00007fff"; wait for T;
+		assert res = X"00007fff" report "Wrong result" severity failure;
+
+		op1 <= X"7fffffff"; op2 <= X"00000000"; wait for T;
+		assert res = X"7fffffff" report "Wrong result" severity failure;
+
+		op1 <= X"7fffffff"; op2 <= X"00007fff"; wait for T;
+		assert res = X"80007ffe" report "Wrong result" severity failure;
+
+
+		op1 <= X"80000000"; op2 <= X"00007fff"; wait for T;
+		assert res = X"80007fff" report "Wrong result" severity failure;
+
+		op1 <= X"7fffffff"; op2 <= X"ffff8000"; wait for T;
+		assert res = X"7fff7fff" report "Wrong result" severity failure;
+
+
+		op1 <= X"00000000"; op2 <= X"ffffffff"; wait for T;
+		assert res = X"ffffffff" report "Wrong result" severity failure;
+
+		op1 <= X"ffffffff"; op2 <= X"00000001"; wait for T;
+		assert res = X"00000000" report "Wrong result" severity failure;
+
+		op1 <= X"ffffffff"; op2 <= X"ffffffff"; wait for T;
+		assert res = X"fffffffe" report "Wrong result" severity failure;
+
+
+		op1 <= X"00000001"; op2 <= X"7fffffff"; wait for T;
+		assert res = X"80000000" report "Wrong result" severity failure;
+
 
 		wait for T;
 		assert false report "Simulation over" severity failure;
