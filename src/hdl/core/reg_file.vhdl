@@ -28,17 +28,22 @@ architecture beh of reg_file is
 	type reg_file_type is array (integer range 2**ALEN-1 downto 0) of
 		std_logic_vector(XLEN-1 downto 0);
 
-	signal array_reg : reg_file_type;	
+	signal array_reg : reg_file_type;
 begin
+	-- hard-wire r0 to zero
+	--array_reg(0) <= (others => '0');
+
 	-- synchronous process
 	process (clk, arst)
+		variable idx : integer;
 	begin
 		if (arst = '1') then
 			array_reg <= (others => (others => '0'));
 		elsif rising_edge(clk) then
 			-- synchronous write
-			if (w_en = '1') then
-				array_reg(to_integer(unsigned(w_addr))) <= w_data;
+			idx := to_integer(unsigned(w_addr));
+			if (w_en = '1' and idx /= 0) then
+				array_reg(idx) <= w_data;
 			end if;
 		end if;
 	end process;
