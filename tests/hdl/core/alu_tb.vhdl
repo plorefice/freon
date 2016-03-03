@@ -34,54 +34,54 @@ begin
 		opsel <= "000"; ctrl <= '0';
 
 		op1 <= X"00000000"; op2 <= X"00000000"; wait for T;
-		assert res = X"00000000" report "Wrong result" severity failure;
+		assert res = X"00000000" report "[ADD] Wrong result" severity failure;
 
 		op1 <= X"00000001"; op2 <= X"00000001"; wait for T;
-		assert res = X"00000002" report "Wrong result" severity failure;
+		assert res = X"00000002" report "[ADD] Wrong result" severity failure;
 
 		op1 <= X"00000003"; op2 <= X"00000007"; wait for T;
-		assert res = X"0000000A" report "Wrong result" severity failure;
+		assert res = X"0000000A" report "[ADD] Wrong result" severity failure;
 
 
 		op1 <= X"00000000"; op2 <= X"ffff8000"; wait for T;
-		assert res = X"ffff8000" report "Wrong result" severity failure;
+		assert res = X"ffff8000" report "[ADD] Wrong result" severity failure;
 
 		op1 <= X"80000000"; op2 <= X"00000000"; wait for T;
-		assert res = X"80000000" report "Wrong result" severity failure;
+		assert res = X"80000000" report "[ADD] Wrong result" severity failure;
 
 		op1 <= X"80000000"; op2 <= X"ffff8000"; wait for T;
-		assert res = X"7fff8000" report "Wrong result" severity failure;
+		assert res = X"7fff8000" report "[ADD] Wrong result" severity failure;
 
 
 		op1 <= X"00000000"; op2 <= X"00007fff"; wait for T;
-		assert res = X"00007fff" report "Wrong result" severity failure;
+		assert res = X"00007fff" report "[ADD] Wrong result" severity failure;
 
 		op1 <= X"7fffffff"; op2 <= X"00000000"; wait for T;
-		assert res = X"7fffffff" report "Wrong result" severity failure;
+		assert res = X"7fffffff" report "[ADD] Wrong result" severity failure;
 
 		op1 <= X"7fffffff"; op2 <= X"00007fff"; wait for T;
-		assert res = X"80007ffe" report "Wrong result" severity failure;
+		assert res = X"80007ffe" report "[ADD] Wrong result" severity failure;
 
 
 		op1 <= X"80000000"; op2 <= X"00007fff"; wait for T;
-		assert res = X"80007fff" report "Wrong result" severity failure;
+		assert res = X"80007fff" report "[ADD] Wrong result" severity failure;
 
 		op1 <= X"7fffffff"; op2 <= X"ffff8000"; wait for T;
-		assert res = X"7fff7fff" report "Wrong result" severity failure;
+		assert res = X"7fff7fff" report "[ADD] Wrong result" severity failure;
 
 
 		op1 <= X"00000000"; op2 <= X"ffffffff"; wait for T;
-		assert res = X"ffffffff" report "Wrong result" severity failure;
+		assert res = X"ffffffff" report "[ADD] Wrong result" severity failure;
 
 		op1 <= X"ffffffff"; op2 <= X"00000001"; wait for T;
-		assert res = X"00000000" report "Wrong result" severity failure;
+		assert res = X"00000000" report "[ADD] Wrong result" severity failure;
 
 		op1 <= X"ffffffff"; op2 <= X"ffffffff"; wait for T;
-		assert res = X"fffffffe" report "Wrong result" severity failure;
+		assert res = X"fffffffe" report "[ADD] Wrong result" severity failure;
 
 
 		op1 <= X"00000001"; op2 <= X"7fffffff"; wait for T;
-		assert res = X"80000000" report "Wrong result" severity failure;
+		assert res = X"80000000" report "[ADD] Wrong result" severity failure;
 
 
 		--##############################################################
@@ -90,50 +90,50 @@ begin
 		opsel <= "000"; ctrl <= '1';
 
 		op1 <= X"00000000"; op2 <= X"00000000"; wait for T;
-		assert res = X"00000000" report "Wrong result" severity failure;
+		assert res = X"00000000" report "[SUB] Wrong result" severity failure;
 
 		op1 <= X"00000001"; op2 <= X"00000001"; wait for T;
-		assert res = X"00000000" report "Wrong result" severity failure;
+		assert res = X"00000000" report "[SUB] Wrong result" severity failure;
 
 		op1 <= X"00000003"; op2 <= X"00000007"; wait for T;
-		assert res = X"fffffffc" report "Wrong result" severity failure;
+		assert res = X"fffffffc" report "[SUB] Wrong result" severity failure;
 
 
 		op1 <= X"00000000"; op2 <= X"ffff8000"; wait for T;
-		assert res = X"00008000" report "Wrong result" severity failure;
+		assert res = X"00008000" report "[SUB] Wrong result" severity failure;
 
 		op1 <= X"80000000"; op2 <= X"00000000"; wait for T;
-		assert res = X"80000000" report "Wrong result" severity failure;
+		assert res = X"80000000" report "[SUB] Wrong result" severity failure;
 
 		op1 <= X"80000000"; op2 <= X"ffff8000"; wait for T;
-		assert res = X"80008000" report "Wrong result" severity failure;
+		assert res = X"80008000" report "[SUB] Wrong result" severity failure;
 
 
 		op1 <= X"00000000"; op2 <= X"00007fff"; wait for T;
-		assert res = X"ffff8001" report "Wrong result" severity failure;
+		assert res = X"ffff8001" report "[SUB] Wrong result" severity failure;
 
 		op1 <= X"7fffffff"; op2 <= X"00000000"; wait for T;
-		assert res = X"7fffffff" report "Wrong result" severity failure;
+		assert res = X"7fffffff" report "[SUB] Wrong result" severity failure;
 
 		op1 <= X"7fffffff"; op2 <= X"00007fff"; wait for T;
-		assert res = X"7fff8000" report "Wrong result" severity failure;
+		assert res = X"7fff8000" report "[SUB] Wrong result" severity failure;
 
 
 		op1 <= X"80000000"; op2 <= X"00007fff"; wait for T;
-		assert res = X"7fff8001" report "Wrong result" severity failure;
+		assert res = X"7fff8001" report "[SUB] Wrong result" severity failure;
 
 		op1 <= X"7fffffff"; op2 <= X"ffff8000"; wait for T;
-		assert res = X"80007fff" report "Wrong result" severity failure;
+		assert res = X"80007fff" report "[SUB] Wrong result" severity failure;
 
 
 		op1 <= X"00000000"; op2 <= X"ffffffff"; wait for T;
-		assert res = X"00000001" report "Wrong result" severity failure;
+		assert res = X"00000001" report "[SUB] Wrong result" severity failure;
 
 		op1 <= X"ffffffff"; op2 <= X"00000001"; wait for T;
-		assert res = X"fffffffe" report "Wrong result" severity failure;
+		assert res = X"fffffffe" report "[SUB] Wrong result" severity failure;
 
 		op1 <= X"ffffffff"; op2 <= X"ffffffff"; wait for T;
-		assert res = X"00000000" report "Wrong result" severity failure;
+		assert res = X"00000000" report "[SUB] Wrong result" severity failure;
 
 
 		wait; -- Terminate testbench
