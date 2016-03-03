@@ -28,9 +28,9 @@ begin
 	-- testbench process
 	tb_proc : process
 	begin
-		--###########################
-		--           [ADD]
-		--###########################
+		--##############################################################
+		--                          [ADD]
+		--##############################################################
 		opsel <= "000"; ctrl <= '0';
 
 		op1 <= X"00000000"; op2 <= X"00000000"; wait for T;
@@ -84,8 +84,59 @@ begin
 		assert res = X"80000000" report "Wrong result" severity failure;
 
 
-		wait for T;
-		assert false report "Simulation over" severity failure;
+		--##############################################################
+		--                          [SUB]
+		--##############################################################
+		opsel <= "000"; ctrl <= '1';
+
+		op1 <= X"00000000"; op2 <= X"00000000"; wait for T;
+		assert res = X"00000000" report "Wrong result" severity failure;
+
+		op1 <= X"00000001"; op2 <= X"00000001"; wait for T;
+		assert res = X"00000000" report "Wrong result" severity failure;
+
+		op1 <= X"00000003"; op2 <= X"00000007"; wait for T;
+		assert res = X"fffffffc" report "Wrong result" severity failure;
+
+
+		op1 <= X"00000000"; op2 <= X"ffff8000"; wait for T;
+		assert res = X"00008000" report "Wrong result" severity failure;
+
+		op1 <= X"80000000"; op2 <= X"00000000"; wait for T;
+		assert res = X"80000000" report "Wrong result" severity failure;
+
+		op1 <= X"80000000"; op2 <= X"ffff8000"; wait for T;
+		assert res = X"80008000" report "Wrong result" severity failure;
+
+
+		op1 <= X"00000000"; op2 <= X"00007fff"; wait for T;
+		assert res = X"ffff8001" report "Wrong result" severity failure;
+
+		op1 <= X"7fffffff"; op2 <= X"00000000"; wait for T;
+		assert res = X"7fffffff" report "Wrong result" severity failure;
+
+		op1 <= X"7fffffff"; op2 <= X"00007fff"; wait for T;
+		assert res = X"7fff8000" report "Wrong result" severity failure;
+
+
+		op1 <= X"80000000"; op2 <= X"00007fff"; wait for T;
+		assert res = X"7fff8001" report "Wrong result" severity failure;
+
+		op1 <= X"7fffffff"; op2 <= X"ffff8000"; wait for T;
+		assert res = X"80007fff" report "Wrong result" severity failure;
+
+
+		op1 <= X"00000000"; op2 <= X"ffffffff"; wait for T;
+		assert res = X"00000001" report "Wrong result" severity failure;
+
+		op1 <= X"ffffffff"; op2 <= X"00000001"; wait for T;
+		assert res = X"fffffffe" report "Wrong result" severity failure;
+
+		op1 <= X"ffffffff"; op2 <= X"ffffffff"; wait for T;
+		assert res = X"00000000" report "Wrong result" severity failure;
+
+
+		wait; -- Terminate testbench
 	end process; -- tb_proc
 
 end architecture; -- tb
