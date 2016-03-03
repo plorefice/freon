@@ -30,6 +30,8 @@ begin
 	-- ALU arithmetic operators
 	process (op1_s, op2_s, op1_u, op2_u, op1, op2, opsel, ctrl)
 	begin
+		res <= (others => '0');
+
 		case opsel(2 downto 0) is
 			when "000" => -- ADD/SUB
 				if (ctrl = '0') then
