@@ -1,4 +1,9 @@
--- Design: Testbench for the Arithmetic Logic Unit
+-- Design:
+--	Testbench for the Arithmetic Logic Unit of the Freon core.
+--	Tests taken from: https://github.com/riscv/riscv-tests
+--
+-- Authors:
+--	Pietro Lorefice <pietro.lorefice@gmail.com>
 
 library ieee;
 use ieee.std_logic_1164.all;

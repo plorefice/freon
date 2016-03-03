@@ -1,4 +1,8 @@
--- Design: Dual-port input, single-port output register file
+-- Design:
+--	Dual-port input, single-port output register file for the Freon core.
+--
+-- Authors:
+--	Pietro Lorefice <pietro.lorefice@gmail.com>
 
 library ieee;
 use ieee.std_logic_1164.all;

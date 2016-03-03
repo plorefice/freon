@@ -1,4 +1,8 @@
--- Design: Arithmetic Logic unit
+-- Design:
+--	Arithmetic Logic unit for the Freon core.
+--
+-- Authors:
+--	Pietro Lorefice <pietro.lorefice@gmail.com>
 
 library ieee;
 use ieee.std_logic_1164.all;
