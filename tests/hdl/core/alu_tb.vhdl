@@ -269,6 +269,25 @@ begin
 		assert res = X"f000f000" report "[AND] Wrong result" severity failure;
 
 
+		--##############################################################
+		--                          [OR]
+		--##############################################################
+		opsel <= "110"; ctrl <= '0';
+
+
+		op1 <= X"ff00ff00"; op2 <= X"0f0f0f0f"; wait for T;
+		assert res = X"ff0fff0f" report "[OR] Wrong result" severity failure;
+
+		op1 <= X"0ff00ff0"; op2 <= X"f0f0f0f0"; wait for T;
+		assert res = X"fff0fff0" report "[OR] Wrong result" severity failure;
+
+		op1 <= X"00ff00ff"; op2 <= X"0f0f0f0f"; wait for T;
+		assert res = X"0fff0fff" report "[OR] Wrong result" severity failure;
+
+		op1 <= X"f00ff00f"; op2 <= X"f0f0f0f0"; wait for T;
+		assert res = X"f0fff0ff" report "[OR] Wrong result" severity failure;
+
+
 		wait; -- Terminate testbench
 	end process; -- tb_proc
 
