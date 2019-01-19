@@ -74,5 +74,6 @@ begin
 
 	pc <= std_logic_vector(pc_reg);
 	instr <= instr_reg;
+	valid <= valid_reg;
 
 end architecture; -- rtl
